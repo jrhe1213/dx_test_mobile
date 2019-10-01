@@ -1,0 +1,24 @@
+{
+  "AppVersion": "1.0.4",
+  "Languages": [{
+      "GUID": "12345678",
+      "Label": "English"
+    }, {
+      "GUID": "1122334455",
+      "Label": "French"
+    }, {
+      "GUID": "111222333",
+      "Label": "Spanish"
+    }
+    , {
+      "GUID": "11112222",
+      "Label": "Italian"
+    }
+  ],
+  "Links": [
+    {
+      "AppStore": "https://apple.com",
+      "PlayStore": "https://google.com"
+    }
+  ]
+}

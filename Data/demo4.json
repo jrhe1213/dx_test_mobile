@@ -1,0 +1,184 @@
+{
+    "SectionGUID": "643ab952-94c8-47cc-a6f2-cb988ee6f21f",
+    "IsRoot": true,
+    "IsSplash": true,
+    "SplashImageGUID": "5860c0e9-1977-4f81-b88b-a6e707a50365",
+    "Description": "Splash description goes here",
+    "Sections": [
+        {
+            "SectionGUID": "a375564b-d2fa-4bb0-831a-2bd36d66d714",
+            "IsContent": false,
+            "Title": "section 11 title",
+            "Sections": [
+                {
+                    "SectionGUID": "e47b4a3c-4eb1-458e-a366-241b5473e6f3",
+                    "IsContent": false,
+                    "Title": "section 22 title",
+                    "Sections": [
+                        {
+                            "SectionGUID": "31d93563-e58e-4ec3-aa4b-9b3513544667",
+                            "IsContent": true,
+                            "Type": "PDF",
+                            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+                            "IsCompleted": false
+                        },
+                        {
+                            "SectionGUID": "775d6248-830a-42c0-be1b-cf8c563508d0",
+                            "IsContent": true,
+                            "Type": "PDF",
+                            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+                            "IsCompleted": false
+                        },
+                        {
+                            "SectionGUID": "882ac7ce-49d7-4757-ac75-46a356f6cd83",
+                            "IsContent": true,
+                            "Type": "PDF",
+                            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+                            "IsCompleted": false
+                        }
+                    ],
+                    "IsCompleted": false,
+                    "Completion": 0
+                },
+                {
+                    "SectionGUID": "90873a54-5200-40e9-b46b-33d745ba36ff",
+                    "IsContent": true,
+                    "Type": "PDF",
+                    "FileName": "http://samples.leanpub.com/thereactnativebook-sample.pdf",
+                    "IsCompleted": false
+                },
+                {
+                    "SectionGUID": "a34679b1-9c0f-43a4-8f86-2c0514369804",
+                    "IsContent": true,
+                    "Type": "IMAGE",
+                    "FileName": "csv.jpeg",
+                    "IsCompleted": false
+                }
+            ],
+            "IsCompleted": false,
+            "Completion": 0
+        },
+        {
+            "SectionGUID": "dc921285-0b70-41dd-9594-f55c8a1032c6",
+            "IsContent": true,
+            "Type": "PDF",
+            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "c9617520-dc48-4cde-bee1-90b21f68ca3d",
+            "IsContent": true,
+            "Type": "PDF",
+            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "3979824f-8459-4cad-8eeb-6720b7e19e10",
+            "IsContent": true,
+            "Type": "PDF",
+            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "8af1753b-b0a9-4c44-8660-b3dd2adc5015",
+            "IsContent": true,
+            "Type": "VIDEO",
+            "FileName": "test.mp4",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "784da00f-85af-4105-a13c-44637e78ed29",
+            "IsContent": true,
+            "Type": "TEXT",
+            "Content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "1a14115e-03d1-4be2-b948-a01371af10ca",
+            "IsContent": true,
+            "Type": "PDF",
+            "FileName": "http://samples.leanpub.com/thereactnativebook-sample.pdf",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "11e8b89b-dad2-4daf-819f-820be3350acd",
+            "IsContent": true,
+            "Type": "IMAGE",
+            "FileName": "test.jpg",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "3926f0c3-9a9a-47a1-9e5b-7d7fc2035b14",
+            "IsContent": true,
+            "Type": "PDF",
+            "FileName": "http://www.africau.edu/images/default/sample.pdf",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "1f28dfe2-00bc-4a45-986c-297349511539",
+            "IsContent": true,
+            "Type": "IMAGE",
+            "FileName": "test.jpg",
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "d255a7d8-bcb4-49f5-b6b9-a12b858fce19",
+            "IsContent": false,
+            "Title": "section 1 title",
+            "Sections": [
+                {
+                    "SectionGUID": "f2b82c66-7c49-4786-894c-f5fbdf44dbcb",
+                    "IsContent": true,
+                    "Type": "IMAGE",
+                    "FileName": "test.jpg",
+                    "IsCompleted": false
+                },
+                {
+                    "SectionGUID": "ce71b955-9e1f-4f47-95db-45b64f618ed9",
+                    "IsContent": false,
+                    "Title": "section 2 title",
+                    "Sections": [
+                        {
+                            "SectionGUID": "116c40bb-f18b-4d60-bcfd-09837f4d4979",
+                            "IsContent": false,
+                            "Title": "section 3 title",
+                            "Sections": [
+                                {
+                                    "SectionGUID": "fc4b5eb7-1c1d-4808-a110-cc8b50ee7504",
+                                    "IsContent": true,
+                                    "Type": "PDF",
+                                    "FileName": "http://www.africau.edu/images/default/sample.pdf",
+                                    "IsCompleted": false
+                                }
+                            ],
+                            "IsCompleted": false,
+                            "Completion": 0
+                        },
+                        {
+                            "SectionGUID": "c25373dc-ad87-4baf-a1cb-01d3108463e0",
+                            "IsContent": true,
+                            "Type": "VIDEO",
+                            "FileName": "2.mp4",
+                            "IsCompleted": false
+                        }
+                    ],
+                    "IsCompleted": false,
+                    "Completion": 0
+                },
+                {
+                    "SectionGUID": "faff69c9-689f-49c0-b672-8a1e863fbd5d",
+                    "IsContent": true,
+                    "Type": "VIDEO",
+                    "FileName": "1.mp4",
+                    "IsCompleted": false
+                }
+            ],
+            "IsCompleted": false,
+            "Completion": 0
+        }
+        
+    ],
+    "IsCompleted": false,
+    "Completion": 0,
+    "IsFeedbackCompleted": false
+}

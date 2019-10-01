@@ -1,0 +1,166 @@
+{
+    "DocumentGUID": "643ab952-94c8-47cc-a6f2-cb988ee6f21f",
+    "Sections": [
+        {
+            "SectionGUID": "8af1753b-b0a9-4c44-8660-b3dd2adc5015",
+            "SectionType": "PDF",
+            "Title": "section 1 title",
+            "FileName": "1.pdf",
+            "IsContent": true,
+            "IsCompleted": true
+        },
+        {
+            "SectionGUID": "d255a7d8-bcb4-49f5-b6b9-a12b858fce19",
+            "SectionType": "VIDEO",
+            "Title": "section 2 title",
+            "Sections": [
+                {
+                    "SectionGUID": "ce71b955-9e1f-4f47-95db-45b64f618ed9",
+                    "SectionType": "VIDEO",
+                    "Title": "video 1 title",
+                    "FileName": "1.mp4",
+                    "IsContent": true,
+                    "IsCompleted": true
+                },
+                {
+                    "SectionGUID": "faff69c9-689f-49c0-b672-8a1e863fbd5d",
+                    "SectionType": "VIDEO",
+                    "FileName": "2.mp4",
+                    "IsContent": true,
+                    "IsCompleted": false
+                }
+            ],
+            "IsContent": false,
+            "IsCompleted": true
+        },
+        {
+            "SectionGUID": "a375564b-d2fa-4bb0-831a-2bd36d66d714",
+            "SectionType": "IMAGE",
+            "FileName": "1.jpeg",
+            "IsContent": true,
+            "IsCompleted": true
+        },
+        {
+            "SectionGUID": "233ef462-9e5a-4103-8f8f-30774744e39d",
+            "SectionType": "FILE",
+            "Title": "level 1",
+            "Sections": [
+                {
+                    "SectionGUID": "9e43a8cb-d7e0-4963-b2cb-0dc00c67cd4d",
+                    "SectionType": "FILE",
+                    "Title": "Roy html file",
+                    "FileName": "1.html",
+                    "IsContent": true,
+                    "IsCompleted": true
+                },
+                {
+                    "SectionGUID": "33643e17-3292-41b6-8528-02a0b7e2cd65",
+                    "SectionType": "FILE",
+                    "FileName": "2.html",
+                    "IsContent": true,
+                    "IsCompleted": true
+                },
+                {
+                    "SectionGUID": "b05e96fe-09bd-4b14-b348-398fcfebcf09",
+                    "SectionType": "FILE",
+                    "Title": "level 2",
+                    "Sections": [
+                        {
+                            "SectionGUID": "6ebde398-4454-41c3-b83b-de0832e2ebe9",
+                            "SectionType": "FILE",
+                            "Title": "ABC html file",
+                            "FileName": "3.html",
+                            "IsContent": true,
+                            "IsCompleted": true
+                        },
+                        {
+                            "SectionGUID": "cabe40b7-6f3b-4fe5-89f8-158540fdcef4",
+                            "SectionType": "FILE",
+                            "Title": "level 3",
+                            "Sections": [
+                                {
+                                    "SectionGUID": "d141adb6-2bcd-43b1-9858-bbe188a9ed63",
+                                    "SectionType": "FILE",
+                                    "Title": "file here",
+                                    "FileName": "4.html",
+                                    "IsContent": true,
+                                    "IsCompleted": false
+                                },
+                                {
+                                    "SectionGUID": "935f8c11-d14b-43cf-a600-84c8bbc9a81c",
+                                    "SectionType": "FILE",
+                                    "Title": "next file here",
+                                    "FileName": "5.html",
+                                    "IsContent": true,
+                                    "IsCompleted": false
+                                }
+                            ],
+                            "IsCompleted": false,
+                            "IsContent": false
+                        }
+                    ],
+                    "IsContent": false,
+                    "IsCompleted": false
+                }
+            ],
+            "IsContent": false,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "7ad96782-53a3-4d2a-b83f-508034dda489",
+            "SectionType": "PDF",
+            "Title": "PDF 2",
+            "FileName": "2.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "58f6e8e2-9893-463d-a90a-078b3e0646f4",
+            "SectionType": "PDF",
+            "Title": "PDF 3",
+            "FileName": "3.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "8e06123e-22dc-49a7-b42a-1595247a6547",
+            "SectionType": "PDF",
+            "Title": "PDF 4",
+            "FileName": "4.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "b2367421-72e2-4086-a72a-372e5651fe01",
+            "SectionType": "PDF",
+            "Title": "PDF 5",
+            "FileName": "5.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "e04392af-5ea5-47e2-9be6-59c1c59096be",
+            "SectionType": "PDF",
+            "Title": "PDF 6",
+            "FileName": "6.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "9cfe1d99-3a9f-42f7-aa02-bf906bad2d55",
+            "SectionType": "PDF",
+            "Title": "PDF 7",
+            "FileName": "7.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        },
+        {
+            "SectionGUID": "d95b6287-c006-4c64-ac85-826d87e6c51d",
+            "SectionType": "PDF",
+            "Title": "PDF 8",
+            "FileName": "8.pdf",
+            "IsContent": true,
+            "IsCompleted": false
+        }
+    ]
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      background: #66a266;
+
+    }
+    #main {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      z-index: 1;
+      animation: fadeIn 4s ease-in;
+    }
+    .card {
+      height: 550px;
+      width: 900px;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+    h1 {
+      position: absolute;
+      left: 120px;
+      top: 30px;
+      font-size: 70px;
+      font-family: 'Amatic SC', cursive;
+    }
+    p, .para1 {
+      position: absolute;
+      top: 200px;
+      left: 150px;
+    }
+    p, .para2 {
+      content: "";
+      top: 300px;
+    }
+    .leaves1 {
+      position: absolute;
+      left: 700px;
+      top: 10px;
+      height: 700px;
+      width: 200px;
+      background-image: url(http://www.myolab.com.au/wp-content/uploads/2016/09/contact-leaves1.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+    .leaves2 {
+      position: absolute;
+      height: 230px;
+      width: 500px;
+      top: 320px;
+      background-image: url(http://www.myolab.com.au/wp-content/uploads/2016/09/services-leaves5.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+    .circ {
+      position: absolute;
+      top: 450px;
+      left: 800px;
+      height: 100px;
+      width: 100px;
+      background-image: url(https://images.vexels.com/media/users/3/147201/isolated/preview/5a6b5f8b43dc8224fbed8796208d7d04-sunrays-dots-and-lines-icon-by-vexels.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    h4 {
+      position: absolute;
+      left: 45px;
+      top: 10px;
+      font-size: 20px;
+    }
+    .circ:hover{
+      animation: rotateRight 2s;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes rotateRight {
+      from {
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            -webkit-transform: rotate(359deg);
+        }
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="main">
+    <div class="card">
+      <h1>Deforestation</h1>
+      <p class="para1">Deforestation, clearance, or clearing is the removal of a forest or stand of trees
+        <br> where the land is thereafter converted to a non-forest use. Examples of deforestation include
+        <br> conversion of forestland to farms, ranches, or urban use. The most concentrated deforestation
+        <br> occurs in tropical rainforests. About 30 percent of Earth's land surface is covered by forests.</p>
+      <p class="para2">Deforestation occurs for multiple reasons: trees are cut down to be used for building
+        <br> or sold as fuel (sometimes in the form of charcoal or timber), while cleared land is used
+        <br> as pasture for livestock and plantation. The removal of trees without sufficient reforestation
+        <br> has resulted in habitat damage, biodiversity loss, and aridity. It has adverse impacts on
+        <br> biosequestration of atmospheric carbon dioxide. Deforestation has also been used in war to
+        <br> deprive the enemy of vital resources and cover for its forces.</p>
+      <div class="leaves1"></div>
+      <div class="leaves2"></div>
+      <div class="circ">
+        <h4>1</h4>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
