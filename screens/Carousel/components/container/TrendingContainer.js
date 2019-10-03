@@ -17,9 +17,9 @@ import { withNavigation } from 'react-navigation';
 // Libraries
 import {
   Icon,
-  SwipeRow,
   Button,
 } from 'native-base';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 // Redux
 import { compose } from 'redux';
@@ -62,6 +62,7 @@ const styles = {
     paddingBottom: 0,
     paddingTop: 0,
     marginBottom: 2,
+    width: Dimensions.get('window').width
   },
   errorMessageStyle: {
     alignItems: 'center',
@@ -77,6 +78,8 @@ const styles = {
   },
   rightsideDeleteButton: {
     height: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
     paddingBottom: 2,
   },
   deleteButtonStyle: {
@@ -307,50 +310,52 @@ class TrendingContainer extends Component {
         <SwipeRow
           key={trendingItem.ExperienceStreamGUID}
           style={[styles.swipeBodyStyle, Platform.OS == 'android' ? { marginTop: 3, marginBottom: 0 } : null]}
-          stopLeftSwipe
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
-              <ContentCard
-                experience={trendingItem}
-                fullWidth
-                localData={trendingItem.isDownloaded}
-                isContentUpdated={trendingItem.isContentUpdated}
-                folderName={trendingItem.ExperienceStreamGUID}
-                disabled={!trendingItem.isDownloaded && !isConnected}
-                handlePressCard={() => this.handlePressCard(trendingItem)}
-                handleChannelNameClick={this.handleChannelNameClick}
-                type="FEEDSPAGE_CARD"
-                postByLabel={postByLabel}
-                videoNotAvailableLabel={videoNotAvailableLabel}
-                isConnected={isConnected}
-                internetAccesssLabel={internetAccesssLabel}
-                userGUID={userGUID}
-                theme={theme}
-                isNightMode={isNightMode}
-                showChannelName={true}
-              />
-            </View>
-          }
-          right={
-            <View style={styles.rightsideDeleteButton}>
-              <Button style={{
-                shadowOffset: {
-                  height: 0,
-                  width: 0,
-                },
-                shadowOpacity: 0,
-                elevation: 0,
-              }} light onPress={
-                !trendingItem.isBookmarked
-                  ? () => this.handleBookmark(trendingItem)
-                  : () => this.handleUnBookmark(trendingItem)
-              }>
-                <Icon active name={trendingItem.isBookmarked ? 'ios-bookmark' : 'ios-bookmark'} />
-              </Button>
-            </View>
-          }
-        />
+        >
+          <View style={styles.rightsideDeleteButton}>
+            <Button style={{
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+              shadowOpacity: 0,
+              elevation: 0,
+              height: '100%',
+              width: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} light onPress={
+              !trendingItem.isBookmarked
+                ? () => this.handleBookmark(trendingItem)
+                : () => this.handleUnBookmark(trendingItem)
+            }>
+              <Icon active name={trendingItem.isBookmarked ? 'ios-star' : 'ios-star-outline'} />
+            </Button>
+          </View>
+          <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
+            <ContentCard
+              experience={trendingItem}
+              fullWidth
+              localData={trendingItem.isDownloaded}
+              isContentUpdated={trendingItem.isContentUpdated}
+              folderName={trendingItem.ExperienceStreamGUID}
+              disabled={!trendingItem.isDownloaded && !isConnected}
+              handlePressCard={() => this.handlePressCard(trendingItem)}
+              handleChannelNameClick={this.handleChannelNameClick}
+              type="FEEDSPAGE_CARD"
+              postByLabel={postByLabel}
+              videoNotAvailableLabel={videoNotAvailableLabel}
+              isConnected={isConnected}
+              internetAccesssLabel={internetAccesssLabel}
+              userGUID={userGUID}
+              theme={theme}
+              isNightMode={isNightMode}
+              showChannelName={true}
+            />
+          </View>
+        </SwipeRow>
       </View>
     );
   }
@@ -388,7 +393,7 @@ class TrendingContainer extends Component {
               ref='_flatListView'
               keyExtractor={this._keyExtractor}
               data={paginationTrending}
-              contentContainerStyle={{  paddingTop: 12, paddingBottom: 20 }}
+              contentContainerStyle={{ paddingTop: 12, paddingBottom: 20 }}
               renderItem={({ item }) => this.renderExperienceStream(item, userGUID)}
               onScrollToIndexFailed={() => { }}
 

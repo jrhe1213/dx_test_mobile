@@ -20,8 +20,6 @@ import * as colors from '../../../../styles/variables';
 const styles = {
   contentContainerStyle: {
     height: Dimensions.get('window').height - 60,
-    borderWidth: 1,
-    borderColor: 'red',
   },
 };
 

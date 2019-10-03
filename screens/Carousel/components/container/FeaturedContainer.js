@@ -17,9 +17,9 @@ import { withNavigation } from 'react-navigation';
 // Libraries
 import {
   Icon,
-  SwipeRow,
   Button,
 } from 'native-base';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 // Redux
 import { compose } from 'redux';
@@ -56,6 +56,7 @@ const styles = {
     paddingBottom: 0,
     paddingTop: 0,
     marginBottom: 2,
+    width: Dimensions.get('window').width
   },
   errorMessageStyle: {
     alignItems: 'center',
@@ -70,6 +71,8 @@ const styles = {
   },
   rightsideDeleteButton: {
     height: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
     paddingBottom: 2,
     // paddingTop: Platform.OS == 'android' ? 9 : 7,
     // paddingRight: Platform.OS == 'android' ? 3 : 2,
@@ -302,51 +305,54 @@ class FeaturedContainer extends Component {
         <SwipeRow
           key={featuredItem.ExperienceStreamGUID}
           style={[styles.swipeBodyStyle, Platform.OS == 'android' ? { marginTop: 3, marginBottom: 0 } : null]}
-          stopLeftSwipe
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
-              <ContentCard
-                type="FEEDSPAGE_CARD"
-                experience={featuredItem}
-                fullWidth
-                localData={featuredItem.isDownloaded}
-                folderName={featuredItem.ExperienceStreamGUID}
-                isContentUpdated={featuredItem.isContentUpdated}
-                handlePressCard={() => this.handlePressCard(featuredItem)}
-                disabled={!featuredItem.isDownloaded && !isConnected}
-                handleChannelNameClick={this.handleChannelNameClick}
-                postByLabel={postByLabel}
-                internetAccesssLabel={internetAccesssLabel}
-                videoNotAvailableLabel={videoNotAvailableLabel}
-                isConnected={isConnected}
-                userGUID={userGUID}
-                theme={theme}
-                isNightMode={isNightMode}
-                currentTab="Featured"
-                showChannelName={false}
-              />
-            </View>
-          }
-          right={
-            <View style={styles.rightsideDeleteButton}>
-              <Button style={{
-                shadowOffset: {
-                  height: 0,
-                  width: 0,
-                },
-                shadowOpacity: 0,
-                elevation: 0,
-              }} light onPress={
-                !featuredItem.isBookmarked
-                  ? () => this.handleBookmark(featuredItem)
-                  : () => this.handleUnBookmark(featuredItem)
-              }>
-                <Icon active name={featuredItem.isBookmarked ? 'ios-bookmark' : 'ios-bookmark'} />
-              </Button>
-            </View>
-          }
-        />
+        >
+          <View style={styles.rightsideDeleteButton}>
+            <Button style={{
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+              shadowOpacity: 0,
+              elevation: 0,
+              height: '100%',
+              width: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} light onPress={
+              !featuredItem.isBookmarked
+                ? () => this.handleBookmark(featuredItem)
+                : () => this.handleUnBookmark(featuredItem)
+            }>
+              <Icon active name={featuredItem.isBookmarked ? 'ios-star' : 'ios-star-outline'} />
+            </Button>
+          </View>
+
+          <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
+            <ContentCard
+              type="FEEDSPAGE_CARD"
+              experience={featuredItem}
+              fullWidth
+              localData={featuredItem.isDownloaded}
+              folderName={featuredItem.ExperienceStreamGUID}
+              isContentUpdated={featuredItem.isContentUpdated}
+              handlePressCard={() => this.handlePressCard(featuredItem)}
+              disabled={!featuredItem.isDownloaded && !isConnected}
+              handleChannelNameClick={this.handleChannelNameClick}
+              postByLabel={postByLabel}
+              internetAccesssLabel={internetAccesssLabel}
+              videoNotAvailableLabel={videoNotAvailableLabel}
+              isConnected={isConnected}
+              userGUID={userGUID}
+              theme={theme}
+              isNightMode={isNightMode}
+              currentTab="Featured"
+              showChannelName={false}
+            />
+          </View>
+        </SwipeRow>
       </View>
     );
   }
@@ -384,7 +390,7 @@ class FeaturedContainer extends Component {
               ref='_flatListView'
               keyExtractor={this._keyExtractor}
               data={paginationFeatured}
-              contentContainerStyle={{  paddingTop: 12, paddingBottom: 20 }}
+              contentContainerStyle={{ paddingTop: 12, paddingBottom: 20 }}
               renderItem={({ item }) => this.renderExperienceStream(item, userGUID)}
               onScrollToIndexFailed={() => { }}
 

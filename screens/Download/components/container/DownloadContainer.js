@@ -18,9 +18,9 @@ import { withNavigation } from 'react-navigation';
 import Moment from 'react-moment';
 import {
   Icon,
-  SwipeRow,
   Button,
 } from 'native-base';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 // Redux
 import { compose } from 'redux';
@@ -78,7 +78,8 @@ const styles = {
     height: '100%',
     paddingBottom: 0,
     paddingTop: 0,
-    // paddingRight: 2,
+    display: 'flex',
+    alignItems: 'flex-end'
   },
   deleteButtonStyle: {
     fontSize: 30,
@@ -263,52 +264,69 @@ class DownloadContainer extends Component {
         <SwipeRow
           key={download.ExperienceStreamGUID}
           style={[styles.swipeBodyStyle, { backgroundColor: theme.bgColor2 }]}
-          stopLeftSwipe
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={[{
-              width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0, margin: 0}]}>
-              <View style={titleContainerStyle}>
-                <Moment element={Text} format="YYYY-MM-DD h:mm a" style={[titleStyle, { color: theme.textColor2 }]}>{download.downloadedAt ? download.downloadedAt : tmpDate}</Moment>
-              </View>
-              {
-                !ExperiencePageGUID
-                  ? <ContentCard
-                    type="FEEDSPAGE_CARD"
-                    experience={download}
-                    fullWidth
-                    localData={true}
-                    folderName={download.ExperienceStreamGUID}
-                    handlePressCard={() => this.handlePressCard(download)}
-                    postByLabel={this.props.postByLabel}
-                    videoNotAvailableLabel={this.props.videoNotAvailableLabel}
-                    isConnected={isConnected}
-                    userGUID={userGUID}
-                    isNightMode={isNightMode}
-                    theme={theme}
-                    currentTab="Download"
-                    handleChannelNameClick={(channel) => this.handleChannelNameClick(channel)}
-                    showChannelName={true}
-                  />
-                  : null
-              }
+          onRowOpen={() => console.log('open')}
+          onRowClose={() => console.log('close')}
+        >
+
+          {/* hidden element */}
+          <View style={styles.rightsideDeleteButton}>
+            <Button style={{
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+              shadowOpacity: 0,
+              elevation: 0,
+              height: '100%',
+              width: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} danger onPress={() => this.handleDeleteDownload(download)}>
+              <Icon active name="ios-trash" />
+            </Button>
+          </View>
+
+          {/* show element */}
+          <View style={[{
+            width: '100%',
+            height: '100%',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            padding: 0,
+            margin: 0,
+            backgroundColor: 'white',
+          }]}>
+            <View style={titleContainerStyle}>
+              <Moment element={Text} format="YYYY-MM-DD h:mm a" style={[titleStyle, { color: theme.textColor2 }]}>{download.downloadedAt ? download.downloadedAt : tmpDate}</Moment>
             </View>
-          }
-          right={
-            <View style={styles.rightsideDeleteButton}>
-              <Button style={{
-                shadowOffset: {
-                  height: 0,
-                  width: 0,
-                },
-                shadowOpacity: 0,
-                elevation: 0,
-              }} danger onPress={() => this.handleDeleteDownload(download)}>
-                <Icon active name="ios-trash" />
-              </Button>
-            </View>
-          }
-        />
+            {
+              !ExperiencePageGUID
+                ? <ContentCard
+                  type="FEEDSPAGE_CARD"
+                  experience={download}
+                  fullWidth
+                  localData={true}
+                  folderName={download.ExperienceStreamGUID}
+                  handlePressCard={() => this.handlePressCard(download)}
+                  postByLabel={this.props.postByLabel}
+                  videoNotAvailableLabel={this.props.videoNotAvailableLabel}
+                  isConnected={isConnected}
+                  userGUID={userGUID}
+                  isNightMode={isNightMode}
+                  theme={theme}
+                  currentTab="Download"
+                  handleChannelNameClick={(channel) => this.handleChannelNameClick(channel)}
+                  showChannelName={true}
+                />
+                : null
+            }
+          </View>
+        </SwipeRow>
       </View>
     );
   }
@@ -362,7 +380,7 @@ class DownloadContainer extends Component {
               ref='_flatListView'
               keyExtractor={this._keyExtractor}
               data={formattedStroageDownloads}
-              contentContainerStyle={{  paddingTop: 12, paddingBottom: 20 }}
+              contentContainerStyle={{ paddingTop: 12, paddingBottom: 20 }}
               renderItem={({ item }) => this.renderExperienceStream(item, userGUID)}
               onScrollToIndexFailed={() => { }}
 

@@ -13,9 +13,9 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import {
   Icon,
-  SwipeRow,
   Button,
 } from 'native-base';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 // Redux
 import { connect } from 'react-redux';
@@ -74,6 +74,7 @@ const styles = {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
+    width: Dimensions.get('window').width
   },
   errorMessageStyle: {
     alignItems: 'center',
@@ -92,6 +93,8 @@ const styles = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingRight: 2,
+    display: 'flex',
+    alignItems: 'flex-end',
   },
   deleteButtonStyle: {
     fontSize: 30,
@@ -474,43 +477,51 @@ class BookmarkSectionContainer extends Component {
     return (
       <View style={[{ marginBottom: 12 }, Platform.OS == 'android' ? { marginTop: 12, marginBottom: 0 } : null]}>
         <SwipeRow
-          disableRightSwipe
           style={[swipeBodyStyle, { backgroundColor: theme.bgColor2 }]}
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={{
-              overflow: 'hidden', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: 16, paddingBottom: 16,
-            }}>
-              <View style={bookmarkDateContainerStyle}>
-                <Moment
-                  element={Text}
-                  format="YYYY-MM-DD h:mm a"
-                  style={[bookmarkDateStyling, { color: theme.textColor2 }]}
-                >{bookmarkItem.bookmarkedAt ? bookmarkItem.bookmarkedAt : tmpDate}</Moment>
-              </View>
-              {
-                this.renderContent(bookmarkItem)
-              }
+        >
+          <View style={rightsideDeleteButton}>
+            <Button style={{
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+              shadowOpacity: 0,
+              elevation: 0,
+              height: '100%',
+              width: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+              danger onPress={
+                () => this.handleUnBookmark(bookmarkItem)
+              } >
+              <Icon active name="trash" style={deleteButtonStyle} />
+            </Button>
+          </View>
+          <View style={{
+            overflow: 'hidden', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            width: '100%', 
+            paddingTop: 16, 
+            paddingBottom: 16,
+            backgroundColor: 'white'
+          }}>
+            <View style={bookmarkDateContainerStyle}>
+              <Moment
+                element={Text}
+                format="YYYY-MM-DD h:mm a"
+                style={[bookmarkDateStyling, { color: theme.textColor2 }]}
+              >{bookmarkItem.bookmarkedAt ? bookmarkItem.bookmarkedAt : tmpDate}</Moment>
             </View>
-          }
-          right={
-            <View style={rightsideDeleteButton}>
-              <Button style={{
-                shadowOffset: {
-                  height: 0,
-                  width: 0,
-                },
-                shadowOpacity: 0,
-                elevation: 0,
-              }}
-                danger onPress={
-                  () => this.handleUnBookmark(bookmarkItem)
-                } >
-                <Icon active name="trash" style={deleteButtonStyle} />
-              </Button>
-            </View>
-          }
-        />
+            {
+              this.renderContent(bookmarkItem)
+            }
+          </View>
+        </SwipeRow>
       </View>
     );
   }

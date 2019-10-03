@@ -18,10 +18,10 @@ import { withNavigation } from 'react-navigation';
 import Moment from 'react-moment';
 import {
   Icon,
-  SwipeRow,
   Button,
 } from 'native-base';
 import FastImage from 'react-native-fast-image';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 // Redux
 import { compose } from 'redux';
@@ -89,6 +89,7 @@ const styles = {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
+    width: Dimensions.get('window').width
   },
   errorMessageStyle: {
     alignItems: 'center',
@@ -106,6 +107,8 @@ const styles = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingRight: 2,
+    display: 'flex',
+    alignItems: 'flex-end',
   },
   deleteButtonStyle: {
     fontSize: 30,
@@ -472,7 +475,7 @@ class BookmarkCardContainer extends Component {
 
       case 'AUDIO':
         return (
-          <View style={{ width: Dimensions.get('window').width - 20  }}>
+          <View style={{ width: Dimensions.get('window').width - 20 }}>
             <DxAudio
               key={section.SectionGUID}
               section={section}
@@ -490,7 +493,7 @@ class BookmarkCardContainer extends Component {
             />
           </View>
         );
-      
+
       default:
         return null;
     }
@@ -530,60 +533,62 @@ class BookmarkCardContainer extends Component {
         <SwipeRow
           key={bookmarkcardItem.ExperienceStreamGUID}
           style={[styles.swipeBodyStyle, { backgroundColor: theme.bgColor2 }]}
-          stopLeftSwipe
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={[{
-              overflow: 'hidden', justifyContent: 'center', alignItems: 'center', width: '100%', backgroundColor: theme.bgColor2
-            }, ]}>
-              <View style={titleContainerStyle}>
-                <Moment element={Text} format="YYYY-MM-DD h:mm a" style={[titleStyle, { color: theme.textColor2 }]}>{bookmarkcardItem.bookmarkedAt ? bookmarkcardItem.bookmarkedAt : tmpDate}</Moment>
-              </View>
-              {
-                bookmarkcardItem.SectionGUID ? <View style={[{ position: 'relative', marginTop: 6 }, isNightMode ? { paddingBottom: 16 } : { paddingBottom: 6 }]}>
-                  {this.renderBookmarkSection(bookmarkcardItem)}
-                  <View style={styles.iconOverlayStyle}>
-                    <FastImage
-                      style={styles.imageStyle}
-                      source={imageSrc}
-                    />
-                  </View>
-                </View>
-                  : <ContentCard
-                    experience={bookmarkcardItem}
-                    fullWidth
-                    localData={bookmarkcardItem.isDownloaded}
-                    folderName={bookmarkcardItem.ExperienceStreamGUID}
-                    handlePressCard={() => this.handlePressCard(bookmarkcardItem)}
-                    handleChannelNameClick={this.handleChannelNameClick}
-                    type="FEEDSPAGE_CARD"
-                    postByLabel={this.props.postByLabel}
-                    videoNotAvailableLabel={this.props.videoNotAvailableLabel}
-                    isConnected={isConnected}
-                    userGUID={userGUID}
-                    theme={theme}
-                    isNightMode={isNightMode}
-                    currentTab="BookmarkCardPage"
-                    showChannelName={true}
+        >
+          <View style={styles.rightsideDeleteButton}>
+            <Button style={{
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+              shadowOpacity: 0,
+              elevation: 0,
+              height: '100%',
+              width: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} danger onPress={() => this.handleUnBookmark(bookmarkcardItem)}>
+              <Icon active name={'ios-trash'} />
+            </Button>
+          </View>
+          <View style={[{
+            overflow: 'hidden', justifyContent: 'center', alignItems: 'center', width: '100%', backgroundColor: theme.bgColor2
+          },]}>
+            <View style={titleContainerStyle}>
+              <Moment element={Text} format="YYYY-MM-DD h:mm a" style={[titleStyle, { color: theme.textColor2 }]}>{bookmarkcardItem.bookmarkedAt ? bookmarkcardItem.bookmarkedAt : tmpDate}</Moment>
+            </View>
+            {
+              bookmarkcardItem.SectionGUID ? <View style={[{ position: 'relative', marginTop: 6 }, isNightMode ? { paddingBottom: 16 } : { paddingBottom: 6 }]}>
+                {this.renderBookmarkSection(bookmarkcardItem)}
+                <View style={styles.iconOverlayStyle}>
+                  <FastImage
+                    style={styles.imageStyle}
+                    source={imageSrc}
                   />
-              }
-            </View>
-          }
-          right={
-            <View style={styles.rightsideDeleteButton}>
-              <Button style={{
-                shadowOffset: {
-                  height: 0,
-                  width: 0,
-                },
-                shadowOpacity: 0,
-                elevation: 0,
-              }} danger onPress={() => this.handleUnBookmark(bookmarkcardItem)}>
-                <Icon active name={'ios-trash'} />
-              </Button>
-            </View>
-          }
-        />
+                </View>
+              </View>
+                : <ContentCard
+                  experience={bookmarkcardItem}
+                  fullWidth
+                  localData={bookmarkcardItem.isDownloaded}
+                  folderName={bookmarkcardItem.ExperienceStreamGUID}
+                  handlePressCard={() => this.handlePressCard(bookmarkcardItem)}
+                  handleChannelNameClick={this.handleChannelNameClick}
+                  type="FEEDSPAGE_CARD"
+                  postByLabel={this.props.postByLabel}
+                  videoNotAvailableLabel={this.props.videoNotAvailableLabel}
+                  isConnected={isConnected}
+                  userGUID={userGUID}
+                  theme={theme}
+                  isNightMode={isNightMode}
+                  currentTab="BookmarkCardPage"
+                  showChannelName={true}
+                />
+            }
+          </View>
+        </SwipeRow>
       </View>
     );
   }
@@ -634,7 +639,7 @@ class BookmarkCardContainer extends Component {
               ref='_flatListView'
               keyExtractor={this._keyExtractor}
               data={dataArray}
-              contentContainerStyle={{  paddingTop: 12, paddingBottom: 20 }}
+              contentContainerStyle={{ paddingTop: 12, paddingBottom: 20 }}
               renderItem={({ item }) => this.renderExperienceStream(item, userGUID)}
               onScrollToIndexFailed={() => { }}
 

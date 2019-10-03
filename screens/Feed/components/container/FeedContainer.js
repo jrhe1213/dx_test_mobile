@@ -5,7 +5,8 @@ import {
 import PropTypes from 'prop-types';
 
 // Libraries
-import { SwipeRow, Button, Icon } from 'native-base';
+import { Button, Icon } from 'native-base';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 import { connect } from 'react-redux';
 
@@ -57,9 +58,12 @@ const styles = {
     paddingRight: 0,
     paddingBottom: 0,
     paddingTop: 0,
+    width: Dimensions.get('window').width
   },
   rightsideDeleteButton: {
     height: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
     paddingBottom: 0,
     paddingTop: Platform.OS == 'android' ? 3 : 0,
   },
@@ -113,10 +117,10 @@ class FeedContainer extends Component {
       previousEmbedTab,
       isSearch,
     } = this.props;
-  
+
     if (currentTab == 'Feed') {
       if (previousTab != 'Section' && previousEmbedTab != 'Video') {
-        if (feedChannel){
+        if (feedChannel) {
           this.getExperienceStreams(false, 1, feedChannel);
         }
       }
@@ -155,7 +159,7 @@ class FeedContainer extends Component {
 
     if (isConnected) {
       if (
-        this.props.feedChannel !== nextProps.feedChannel 
+        this.props.feedChannel !== nextProps.feedChannel
         ||
         (this.props.feedChannel && nextProps.feedChannel && this.props.feedChannel.ExperienceChannelGUID !== nextProps.feedChannel.ExperienceChannelGUID)
       ) {
@@ -238,54 +242,56 @@ class FeedContainer extends Component {
         <SwipeRow
           key={stream.ExperienceStreamGUID}
           style={[styles.swipeRowContainer, Platform.OS == 'android' ? { marginTop: 3, marginBottom: 0 } : null]}
-          stopLeftSwipe
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
-              <ContentCard
-                key={stream.ExperienceStreamGUID}
-                experience={stream}
-                localData={stream.isDownloaded}
-                isContentUpdated={stream.isContentUpdated}
-                folderName={stream.ExperienceStreamGUID}
-                disabled={!stream.isDownloaded && !isConnected}
-                fullWidth
-                handlePressCard={() => this.handlePressCard(stream)}
-                type="FEEDSPAGE_CARD"
-                internetAccesssLabel={internetAccesssLabel}
-                videoNotAvailableLabel={videoNotAvailableLabel}
-                isConnected={isConnected}
-                userGUID={userGUID}
-                theme={theme}
-                isNightMode={isNightMode}
-                currentTab={currentTab}
-                showChannelNam={false}
-              />
-            </View>
-          }
-          right={
-            <View style={styles.rightsideDeleteButton}>
-              <Button
-                style={{
-                  shadowOffset: {
-                    height: 0,
-                    width: 0,
-                  },
-                  shadowOpacity: 0,
-                  elevation: 0,
-                }}
-                light
-                onPress={
-                  !stream.isBookmarked
-                    ? () => this.handleBookmark(stream)
-                    : () => this.handleUnBookmark(stream)
-                }
-              >
-                <Icon active name={stream.isBookmarked ? 'ios-bookmark' : 'ios-bookmark'} />
-              </Button>
-            </View>
-          }
-        />
+        >
+          <View style={styles.rightsideDeleteButton}>
+            <Button
+              style={{
+                shadowOffset: {
+                  height: 0,
+                  width: 0,
+                },
+                shadowOpacity: 0,
+                elevation: 0,
+                height: '100%',
+                width: 100,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+              light
+              onPress={
+                !stream.isBookmarked
+                  ? () => this.handleBookmark(stream)
+                  : () => this.handleUnBookmark(stream)
+              }
+            >
+              <Icon active name={stream.isBookmarked ? 'ios-star' : 'ios-star-outline'} />
+            </Button>
+          </View>
+          <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
+            <ContentCard
+              key={stream.ExperienceStreamGUID}
+              experience={stream}
+              localData={stream.isDownloaded}
+              isContentUpdated={stream.isContentUpdated}
+              folderName={stream.ExperienceStreamGUID}
+              disabled={!stream.isDownloaded && !isConnected}
+              fullWidth
+              handlePressCard={() => this.handlePressCard(stream)}
+              type="FEEDSPAGE_CARD"
+              internetAccesssLabel={internetAccesssLabel}
+              videoNotAvailableLabel={videoNotAvailableLabel}
+              isConnected={isConnected}
+              userGUID={userGUID}
+              theme={theme}
+              isNightMode={isNightMode}
+              currentTab={currentTab}
+              showChannelNam={false}
+            />
+          </View>
+        </SwipeRow>
       </View>
     );
   };
@@ -417,7 +423,7 @@ const mapStateToProps = state => ({
   currentTab: state.nav.currentTab,
   userGUID: state.user.userGUID,
   languageGUID: state.deviceInfo.languageGUID,
-  
+
   isConnected: state.deviceInfo.internetInfo.isConnected,
   feedChannel: state.feed.feedChannel,
   experiences: state.feed.experiences,

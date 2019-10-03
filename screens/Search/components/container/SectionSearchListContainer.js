@@ -404,7 +404,7 @@ class SectionSearchListContainer extends Component {
                 <Icon
                   active
                   style={{ fontSize: 25 }}
-                  name={section.isBookmarked ? 'ios-bookmark' : 'ios-bookmark'}
+                  name={section.isBookmarked ? 'ios-star' : 'ios-star-outline'}
                 />
               </View>
             </TouchableOpacity>

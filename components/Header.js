@@ -718,8 +718,6 @@ const styles = {
   },
   backIconWrapperStyle: {
     width: 54,
-    borderWidth: 1,
-    borderColor: 'red'
   },
   backIconStyle: {
     marginLeft: 12,

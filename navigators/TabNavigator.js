@@ -56,7 +56,6 @@ const MainRootTabNavigator = createBottomTabNavigator({
     //   // tabBarLabel: 'Bookmarks',
     //   tabBarIcon: ({ tintColor }) => (
     //     <Icon
-    //       name="ios-bookmark"
     //       color={tintColor}
     //       size={iconSize}
     //     />

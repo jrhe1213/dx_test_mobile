@@ -17,9 +17,9 @@ import { withNavigation } from 'react-navigation';
 // Libraries
 import {
   Icon,
-  SwipeRow,
   Button,
 } from 'native-base';
+import { SwipeRow } from 'react-native-swipe-list-view';
 
 // Redux
 import { compose } from 'redux';
@@ -65,6 +65,7 @@ const styles = {
     paddingBottom: 0,
     paddingTop: 0,
     marginBottom: 2,
+    width: Dimensions.get('window').width
   },
   errorMessageStyle: {
     alignItems: 'center',
@@ -80,6 +81,8 @@ const styles = {
   },
   rightsideDeleteButton: {
     height: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
     paddingBottom: 2,
   },
   deleteButtonStyle: {
@@ -283,7 +286,7 @@ class MostPopularContainer extends Component {
 
   // Handle un-bookmark
   handleUnBookmark = (stream) => {
-    const { 
+    const {
       currentTab,
       isRequesting
     } = this.props;
@@ -307,50 +310,52 @@ class MostPopularContainer extends Component {
         <SwipeRow
           key={mostPopuarItem.ExperienceStreamGUID}
           style={[styles.swipeBodyStyle, Platform.OS == 'android' ? { marginTop: 3, marginBottom: 0 } : null]}
-          stopLeftSwipe
+          disableRightSwipe={true}
           rightOpenValue={-100}
-          body={
-            <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
-              <ContentCard
-                experience={mostPopuarItem}
-                fullWidth
-                localData={mostPopuarItem.isDownloaded}
-                folderName={mostPopuarItem.ExperienceStreamGUID}
-                isContentUpdated={mostPopuarItem.isContentUpdated}
-                handlePressCard={() => this.handlePressCard(mostPopuarItem)}
-                handleChannelNameClick={this.handleChannelNameClick}
-                disabled={!mostPopuarItem.isDownloaded && !isConnected}
-                type="FEEDSPAGE_CARD"
-                postByLabel={postByLabel}
-                internetAccesssLabel={internetAccesssLabel}
-                videoNotAvailableLabel={videoNotAvailableLabel}
-                isConnected={isConnected}
-                userGUID={userGUID}
-                theme={theme}
-                isNightMode={isNightMode}
-                showChannelName={true}
-              />
-            </View>
-          }
-          right={
-            <View style={styles.rightsideDeleteButton}>
-              <Button style={{
-                shadowOffset: {
-                  height: 0,
-                  width: 0,
-                },
-                shadowOpacity: 0,
-                elevation: 0,
-              }} light onPress={
-                !mostPopuarItem.isBookmarked
-                  ? () => this.handleBookmark(mostPopuarItem)
-                  : () => this.handleUnBookmark(mostPopuarItem)
-              }>
-                <Icon active name={mostPopuarItem.isBookmarked ? 'ios-bookmark' : 'ios-bookmark'} />
-              </Button>
-            </View>
-          }
-        />
+        >
+          <View style={styles.rightsideDeleteButton}>
+            <Button style={{
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+              shadowOpacity: 0,
+              elevation: 0,
+              height: '100%',
+              width: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} light onPress={
+              !mostPopuarItem.isBookmarked
+                ? () => this.handleBookmark(mostPopuarItem)
+                : () => this.handleUnBookmark(mostPopuarItem)
+            }>
+              <Icon active name={mostPopuarItem.isBookmarked ? 'ios-star' : 'ios-star-outline'} />
+            </Button>
+          </View>
+          <View style={{ paddingBottom: 0, marginBottom: 0, overflow: 'hidden', width: '100%' }}>
+            <ContentCard
+              experience={mostPopuarItem}
+              fullWidth
+              localData={mostPopuarItem.isDownloaded}
+              folderName={mostPopuarItem.ExperienceStreamGUID}
+              isContentUpdated={mostPopuarItem.isContentUpdated}
+              handlePressCard={() => this.handlePressCard(mostPopuarItem)}
+              handleChannelNameClick={this.handleChannelNameClick}
+              disabled={!mostPopuarItem.isDownloaded && !isConnected}
+              type="FEEDSPAGE_CARD"
+              postByLabel={postByLabel}
+              internetAccesssLabel={internetAccesssLabel}
+              videoNotAvailableLabel={videoNotAvailableLabel}
+              isConnected={isConnected}
+              userGUID={userGUID}
+              theme={theme}
+              isNightMode={isNightMode}
+              showChannelName={true}
+            />
+          </View>
+        </SwipeRow>
       </View>
     );
   }
@@ -388,7 +393,7 @@ class MostPopularContainer extends Component {
               ref='_flatListView'
               keyExtractor={this._keyExtractor}
               data={paginationMostPopular}
-              contentContainerStyle={{  paddingTop: 12, paddingBottom: 20 }}
+              contentContainerStyle={{ paddingTop: 12, paddingBottom: 20 }}
               renderItem={({ item }) => this.renderExperienceStream(item, userGUID)}
               onScrollToIndexFailed={() => { }}
 
