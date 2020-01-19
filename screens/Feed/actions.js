@@ -400,4 +400,27 @@ export default {
     payload: {},
   }),
 
+
+  dx_training_complete: (experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID, isTagEnable) => ({
+    type: constants.DX_TRAINING_COMPLETE,
+    payload: {
+      experienceStreamGUID,
+      experienceStreamWithChannelInfo,
+      currentLevelExperiencePageGUID,
+      isTagEnable
+    },
+  }),
+
+  dx_training_complete_success: () => ({
+    type: constants.DX_TRAINING_COMPLETE_SUCCESS,
+    payload: {},
+  }),
+
+  dx_training_complete_errors: errors => ({
+    type: constants.DX_TRAINING_COMPLETE_ERRORS,
+    payload: {
+      errors,
+    },
+  }),
+
 };

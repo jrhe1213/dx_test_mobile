@@ -802,6 +802,7 @@ function* postStreamExperienceCardInfoV2Saga(action) {
               NumberOfImpressions: getExistedDownloaded.Response[0].numberOfImpressions || "0",
               CompletionArr: getExistedDownloaded.Response[0].CompletionArr,
               AudioCompletionArr: getExistedDownloaded.Response[0].AudioCompletionArr,
+              IsTrainingCompleted: getExistedDownloaded.Response[0].IsTrainingCompleted,
             },
           };
 
@@ -1382,6 +1383,7 @@ function* updateUserContentSaga(action) {
           NumberOfImpressions: stream.numberOfImpressions || "0",
           CompletionArr: stream.CompletionArr,
           AudioCompletionArr: stream.AudioCompletionArr,
+          IsTrainingCompleted: stream.IsTrainingCompleted,
         },
       };
       const userSync = yield call(userSyncApi, formattedUserSyncParams, keycloak);
@@ -1716,6 +1718,7 @@ function* updateLocalStorageExperienceStreamSaga(action) {
           NumberOfImpressions: tempExperienceStreamWithChannelInfo.numberOfImpressions || "0",
           CompletionArr: tempExperienceStreamWithChannelInfo.CompletionArr,
           AudioCompletionArr: tempExperienceStreamWithChannelInfo.AudioCompletionArr,
+          IsTrainingCompleted: tempExperienceStreamWithChannelInfo.IsTrainingCompleted,
         }
       };
 
@@ -1813,6 +1816,7 @@ function* completeFeedbackLocalStorageExperienceStreamSaga(action) {
 
     // Add IsFeedbackcompleted to stream level
     tempExperienceStreamWithChannelInfo.IsFeedbackCompleted = "1";
+    tempExperienceStreamWithChannelInfo.IsTrainingCompleted = "1";
 
     const response = yield call(updateLocalStorage, action.payload.experienceStreamGUID, tempExperienceStreamWithChannelInfo, userReducer.userGUID);
 
@@ -1832,6 +1836,7 @@ function* completeFeedbackLocalStorageExperienceStreamSaga(action) {
           NumberOfImpressions: tempExperienceStreamWithChannelInfo.numberOfImpressions || "0",
           CompletionArr: tempExperienceStreamWithChannelInfo.CompletionArr,
           AudioCompletionArr: tempExperienceStreamWithChannelInfo.AudioCompletionArr,
+          IsTrainingCompleted: tempExperienceStreamWithChannelInfo.IsTrainingCompleted,
           IsFeedbackCompleted: "1",
         },
       };
@@ -1959,6 +1964,7 @@ function* updateLocalStorageExperienceStreamWithCurrentLevelSaga(action) {
           NumberOfImpressions: tempExperienceStreamWithChannelInfo.numberOfImpressions || "0",
           CompletionArr: tempExperienceStreamWithChannelInfo.CompletionArr,
           AudioCompletionArr: tempExperienceStreamWithChannelInfo.AudioCompletionArr,
+          IsTrainingCompleted: tempExperienceStreamWithChannelInfo.IsTrainingCompleted,
         }
       };
 
@@ -2294,6 +2300,97 @@ const assembleOldDataIntoOneDimensionArr = (oldData, formattedOldData) => {
   }
 };
 
+// ============================================================
+// 9. Complete training
+function* completeTrainingLocalStorageExperienceStreamSaga(action) {
+  const deviceInfo = yield select(selectors.deviceInfo);
+  try {
+    const userReducer = yield select(selectors.user);
+    const nav = yield select(selectors.nav);
+    const feed = yield select(selectors.feed);
+
+    const keycloak = {
+      isSkipLoginSuccess: deviceInfo.isSkipLoginSuccess,
+      deviceId: deviceInfo.deviceId,
+      expiryDate: deviceInfo.expiryDate,
+      token: deviceInfo.token,
+      refreshToken: deviceInfo.refreshToken,
+    };
+
+    const tempExperienceStreamWithChannelInfo = action.payload.experienceStreamWithChannelInfo;
+
+    // ADD CURRENT TIME ON EXIT
+    tempExperienceStreamWithChannelInfo.SyncedAt = getUtcCurrentDateTime();
+    // report 1
+    tempExperienceStreamWithChannelInfo.endedAt = getUtcCurrentDateTime();
+    if (!tempExperienceStreamWithChannelInfo.timeSpent) {
+      tempExperienceStreamWithChannelInfo.timeSpent = 0;
+    }
+    if (!tempExperienceStreamWithChannelInfo.startedAt) {
+      tempExperienceStreamWithChannelInfo.startedAt = getUtcCurrentDateTime();
+    }
+    if (!tempExperienceStreamWithChannelInfo.numberOfImpressions) {
+      tempExperienceStreamWithChannelInfo.numberOfImpressions = 1;
+    }
+    tempExperienceStreamWithChannelInfo.numberOfImpressions += 1;
+    tempExperienceStreamWithChannelInfo.timeSpent += moment(tempExperienceStreamWithChannelInfo.endedAt).diff(moment(tempExperienceStreamWithChannelInfo.startedAt), 'seconds');
+    tempExperienceStreamWithChannelInfo.CurrentLevelExperiencePageGUID = action.payload.currentLevelExperiencePageGUID;
+    tempExperienceStreamWithChannelInfo.IsTrainingCompleted = '1';
+
+    // Update local storage: completion
+    const syncedAt = getCurrentDateTime();
+    if (deviceInfo.internetInfo.isConnected) {
+      tempExperienceStreamWithChannelInfo.SyncedAt = syncedAt;
+    }
+
+    // * replace the data arr back to stream
+    if (feed.dataType == 'NEW_DATA' && !feed.isFetchNewData) {
+      if (tempExperienceStreamWithChannelInfo.DataArr && tempExperienceStreamWithChannelInfo.DataArr.length) {
+        tempExperienceStreamWithChannelInfo.Experience.ExperiencePages = tempExperienceStreamWithChannelInfo.DataArr;
+      }
+    }
+   
+    const response = yield call(updateLocalStorage, action.payload.experienceStreamGUID, tempExperienceStreamWithChannelInfo, userReducer.userGUID);
+
+    // Sync Api...
+    if (deviceInfo.internetInfo.isConnected) {
+      const formattedUserSyncParams = {
+        Platform: deviceInfo.systemName.toUpperCase(),
+        DeviceID: deviceInfo.deviceId,
+        Type: (nav.previousTab == 'Bookmark'
+          || nav.previousTab == 'BookmarkCardPage'
+          || nav.previousTab == 'PAGES') ? 'BOOKMARK_CARD' : 'DOWNLOAD',
+        ExperienceStreamGUID: tempExperienceStreamWithChannelInfo.ExperienceStreamGUID,
+        Data: {
+          CurrentLevelExperiencePageGUID: tempExperienceStreamWithChannelInfo.CurrentLevelExperiencePageGUID || "",
+          SyncedAt: tempExperienceStreamWithChannelInfo.SyncedAt,
+          TimeSpent: tempExperienceStreamWithChannelInfo.timeSpent || "0",
+          NumberOfImpressions: tempExperienceStreamWithChannelInfo.numberOfImpressions || "0",
+          CompletionArr: tempExperienceStreamWithChannelInfo.CompletionArr,
+          AudioCompletionArr: tempExperienceStreamWithChannelInfo.AudioCompletionArr,
+          IsTrainingCompleted: tempExperienceStreamWithChannelInfo.IsTrainingCompleted,
+        }
+      };
+
+      const userSync = yield call(userSyncApi, formattedUserSyncParams, keycloak);
+      const { Confirmation, Response, Message } = userSync.Data;
+      if (userSync) {
+        if (Confirmation !== 'SUCCESS') {
+          crashlyticsRecord(deviceInfo.crashlytics, 'Api', 'updateLocalStorageExperienceStreamSaga', 'Api', '/user/v2/sync_stream', Message);
+          throw new Error();
+        } else {
+
+        }
+      }
+    }
+
+    yield put(actions.dx_browser_back_success());
+  } catch (err) {
+    crashlyticsRecord(deviceInfo.crashlytics, 'LocalStorage', 'updateLocalStorageExperienceStreamSaga', err.type, err.method, err.message);
+    yield put(actions.dx_browser_back_success());
+  }
+}
+
 export default function* FeedsSaga() {
   yield takeLatest(constants.DX_POST_STREAM_EXPRERIENCE_LIST_REQUEST, postStreamExperienceSaga);
 
@@ -2311,4 +2408,7 @@ export default function* FeedsSaga() {
 
   yield takeLatest(constants.DX_SKIP_THE_CONTENT_UPDATE_REQUEST, skipThContentUpdateSaga);
   yield takeLatest(constants.DX_UPDATE_USER_THE_CONTENT_REQUEST, updateUserContentSaga);
+
+
+  yield takeLatest(constants.DX_TRAINING_COMPLETE, completeTrainingLocalStorageExperienceStreamSaga);
 }

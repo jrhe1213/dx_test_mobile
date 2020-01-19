@@ -633,6 +633,7 @@ export default (state = initialState, action) => {
 
     case constants.CLOSE_CARD_ONLY_MODAL_REQUEST:
     case feedConstants.DX_BROWSER_BACK:
+    case feedConstants.DX_TRAINING_COMPLETE:
     case feedConstants.DX_FEED_BACK_COMPLETE:
     case feedConstants.DX_HOME_BROWSER_BACK:
       return {

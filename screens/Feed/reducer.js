@@ -641,6 +641,7 @@ export default (state = INITIAL_STATE, action) => {
 
     case constants.DX_HOME_BROWSER_BACK:
     case constants.DX_BROWSER_BACK:
+    case constants.DX_TRAINING_COMPLETE:
       // 1. feed current section
       tmp_current_level_section = {
         Title: 'Feed',

@@ -2800,6 +2800,7 @@ function* minimizeAppSaga(action) {
             NumberOfImpressions: tempExperienceStreamWithChannelInfoV2.numberOfImpressions || "0",
             CompletionArr: tempExperienceStreamWithChannelInfoV2.CompletionArr,
             AudioCompletionArr: tempExperienceStreamWithChannelInfoV2.AudioCompletionArr,
+            IsTrainingCompleted: tempExperienceStreamWithChannelInfoV2.IsTrainingCompleted,
           },
         };
         const userSync = yield call(userSyncApi, formattedUserSyncParams, keycloak);

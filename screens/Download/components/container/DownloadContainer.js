@@ -310,6 +310,7 @@ class DownloadContainer extends Component {
                   type="FEEDSPAGE_CARD"
                   experience={download}
                   fullWidth
+                  isTrainingCompleted={download.IsTrainingCompleted ? true : false}
                   localData={true}
                   folderName={download.ExperienceStreamGUID}
                   handlePressCard={() => this.handlePressCard(download)}

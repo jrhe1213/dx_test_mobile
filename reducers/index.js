@@ -332,6 +332,7 @@ function nav(state = initialNavState, action) {
 
     case feedScreenContants.DX_HOME_BROWSER_BACK:
     case feedScreenContants.DX_BROWSER_BACK:
+    case feedScreenContants.DX_TRAINING_COMPLETE:
     case feedScreenContants.DX_FEED_BACK_COMPLETE:
 
       state.currentTab = state.previousTab;

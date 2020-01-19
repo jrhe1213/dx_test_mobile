@@ -153,8 +153,6 @@ class ContentCard extends Component {
       showChannelName,
     } = this.props;
 
-    console.log('this.props.localData: ', this.props.localData);
-
     return (
       <View style={Object.assign({}, itemContainerStyle, { backgroundColor: (type === "FEEDSPAGE_CARD" || currentTab === 'Tag') ? theme.bgColor2 : theme.bgColor }, isNightMode ? { elevation: 0, shadowOpacity: 0 } : null)}>
         <DxCard
@@ -230,10 +228,18 @@ class ContentCard extends Component {
             </View> : null
           }
           {
-            this.props.localData && <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
+            this.props.isTrainingCompleted && <View style={{ position: 'absolute', right: 24, bottom: 0 }}>
               <Icon
                 style={{color: 'green'}}
                 name="check-circle"
+                size={24}
+              />
+            </View>
+          }
+          {
+            this.props.localData && <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
+              <Icon
+                name="file-download"
                 size={24}
               />
             </View>

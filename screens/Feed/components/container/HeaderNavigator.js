@@ -18,6 +18,8 @@ import config from '../../../../config';
 // Components
 import { Header } from '../../../../components';
 import { handleAndroidBackButton, removeAndroidBackButtonHandler } from '../../../../components/AndroidBackButton';
+import DxModal from '../../../../components/DxModal';
+import CompleteTrainingModal from '../../../../modals/CompleteTrainingModal';
 
 const maxWidth = 260;
 const maxHeight = 175;
@@ -42,6 +44,7 @@ class HeaderNavigator extends Component {
 
   state = {
     limit: 5,
+    modalOpen: false
   };
 
   componentDidMount = () => {
@@ -81,6 +84,13 @@ class HeaderNavigator extends Component {
 
     if (current_level_section.IsRoot === true) {
       // Back to feed list
+      if (experienceStreamWithChannelInfo.IsTraining
+        && !experienceStreamWithChannelInfo.IsTrainingCompleted) {
+        this.setState({
+          modalOpen: true
+        })
+        return;
+      }
       this.props.dx_browser_back(currentExperienceStreamGUID, experienceStreamWithChannelInfo, isTagEnable);
     }
     else if (currentTab == 'Feed') {
@@ -99,8 +109,19 @@ class HeaderNavigator extends Component {
       current_level_section,
       isTagEnable,
     } = this.props;
-    this.props.dx_home_browser_back(currentExperienceStreamGUID, experienceStreamWithChannelInfo, current_level_section.ExperiencePageGUID,
-    isTagEnable);
+    if (experienceStreamWithChannelInfo.IsTraining
+      && !experienceStreamWithChannelInfo.IsTrainingCompleted) {
+      this.setState({
+        modalOpen: true
+      })
+      return;
+    }
+    this.props.dx_home_browser_back(
+      currentExperienceStreamGUID, 
+      experienceStreamWithChannelInfo, 
+      current_level_section.ExperiencePageGUID,
+      isTagEnable
+    );
   }
 
   handleChangeInput = (value) => {
@@ -158,6 +179,31 @@ class HeaderNavigator extends Component {
     this.props.dx_section_toggle_menu(!this.props.menuToggle);
   }
 
+  handleCompleteTraining = () => {
+    this.setState({
+      modalOpen: false
+    })
+    const {
+      currentExperienceStreamGUID,
+      experienceStreamWithChannelInfo,
+      current_level_section,
+      isTagEnable,
+    } = this.props;
+    this.props.dx_training_complete(currentExperienceStreamGUID, experienceStreamWithChannelInfo, current_level_section.ExperiencePageGUID, isTagEnable);
+  }
+
+  handleCancelCompleteTraining = () => {
+    this.setState({
+      modalOpen: false
+    })
+    const {
+      currentExperienceStreamGUID,
+      experienceStreamWithChannelInfo,
+      isTagEnable,
+    } = this.props;
+    this.props.dx_browser_back(currentExperienceStreamGUID, experienceStreamWithChannelInfo, isTagEnable);
+  }
+
   render() {
     const {
       menuToggle,
@@ -192,54 +238,68 @@ class HeaderNavigator extends Component {
     } = this.props;
 
     return (
-      <Header
-        menuToggle={menuToggle}
-        currentTab={currentTab}
+      <React.Fragment>
+        <Header
+          menuToggle={menuToggle}
+          currentTab={currentTab}
 
-        imageOpacity={this.props.imageOpacity}
-        imageTranslate={this.props.imageTranslate}
+          imageOpacity={this.props.imageOpacity}
+          imageTranslate={this.props.imageTranslate}
 
-        isClose={isClose}
-        handleCloseFeedbackPage={handleCloseFeedbackPage}
+          isClose={isClose}
+          handleCloseFeedbackPage={handleCloseFeedbackPage}
 
-        handleClosePage={closeDownloadPage}
-        title={title === 'FEEDBACK' ? feedbackLabel : title}
-        isSplash={isSplash}
-        splashContent={splashContent}
-        splashColor={splashColor}
-        splashOpacity={splashOpacity}
-        splashOpacityColor={splashOpacityColor}
-        splashImg={splashImg}
-        imgBgType={imgBgType}
-        imgBgColor={imgBgColor}
-        isSplashImageEnabled={isSplashImageEnabled}
+          handleClosePage={closeDownloadPage}
+          title={title === 'FEEDBACK' ? feedbackLabel : title}
+          isSplash={isSplash}
+          splashContent={splashContent}
+          splashColor={splashColor}
+          splashOpacity={splashOpacity}
+          splashOpacityColor={splashOpacityColor}
+          splashImg={splashImg}
+          imgBgType={imgBgType}
+          imgBgColor={imgBgColor}
+          isSplashImageEnabled={isSplashImageEnabled}
 
-        isFeedList={isFeedList}
-        isFeedlistLoading={isFirstLoading}
+          isFeedList={isFeedList}
+          isFeedlistLoading={isFirstLoading}
 
-        channelColor={channel && channel.ChannelColor}
-        isBackIcon={isBackIcon}
-        isSearchIcon={isSearchIcon}
-        isSearch={currentTab !== 'Section' ? this.props.searchToggle : this.props.searchToggleSection}
-        isHamburgerIcon={isHamburgerIcon}
-        displayHomeBack={displayHomeBack}
-        displayToggleCard={displayToggleCard}
-        totalExpRecords={0}
-        postLabel={postLabel}
-        inputPlaceholder={searchLabel}
-        inputValue={currentTab === 'Section' ? this.props.searchValueSection : this.props.searchValue}
-        hiddenUserIcon={(this.props.nav.currentTab == 'Feedback' || this.props.document)}
-        handleBackIconPress={() => this.handleBackNavigate()}
-        handleHomeBackIconPress={() => this.handleHomeBackNavigate()}
-        handleChangeInput={val => this.handleChangeInput(val)}
-        handleClearSearch={() => this.handleClearSearch()}
-        handleSearchIconPress={() => this.handleSearchIconPress()}
-        handleToggleMenu={toggle => this.handleToggleMenu(toggle)}
-        handlePressContent={() => this.props.handlePressContent()}
-        handleHomeBackPress={() => this.handleHomeBackPress()}
+          channelColor={channel && channel.ChannelColor}
+          isBackIcon={isBackIcon}
+          isSearchIcon={isSearchIcon}
+          isSearch={currentTab !== 'Section' ? this.props.searchToggle : this.props.searchToggleSection}
+          isHamburgerIcon={isHamburgerIcon}
+          displayHomeBack={displayHomeBack}
+          displayToggleCard={displayToggleCard}
+          totalExpRecords={0}
+          postLabel={postLabel}
+          inputPlaceholder={searchLabel}
+          inputValue={currentTab === 'Section' ? this.props.searchValueSection : this.props.searchValue}
+          hiddenUserIcon={(this.props.nav.currentTab == 'Feedback' || this.props.document)}
+          handleBackIconPress={() => this.handleBackNavigate()}
+          handleHomeBackIconPress={() => this.handleHomeBackNavigate()}
+          handleChangeInput={val => this.handleChangeInput(val)}
+          handleClearSearch={() => this.handleClearSearch()}
+          handleSearchIconPress={() => this.handleSearchIconPress()}
+          handleToggleMenu={toggle => this.handleToggleMenu(toggle)}
+          handlePressContent={() => this.props.handlePressContent()}
+          handleHomeBackPress={() => this.handleHomeBackPress()}
 
-        theme={theme}
-      />
+          theme={theme}
+        />
+
+        <DxModal
+          modalOpen={this.state.modalOpen}
+          transparent={true}
+          center={true}
+        >
+          <CompleteTrainingModal
+            theme={this.props.theme}
+            handleConfirmUserCompleteTraining={() => this.handleCompleteTraining()}
+            handleCancelCompleteTraining={() => this.handleCancelCompleteTraining()}
+          />
+        </DxModal>
+      </React.Fragment>
     );
   }
 }
@@ -278,7 +338,7 @@ const dispatchToProps = dispatch => ({
   dx_section_browser_back: bookmarks => dispatch(actions.dx_section_browser_back(bookmarks)),
   dx_archive: (experienceStreamGUID, experienceStreamWithChannelInfo, bookmarks) => dispatch(actions.dx_archive(experienceStreamGUID, experienceStreamWithChannelInfo, bookmarks)),
 
-  dx_home_browser_back: (experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID, isTagEnable) => dispatch(actions.dx_home_browser_back(experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID , isTagEnable)),
+  dx_home_browser_back: (experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID, isTagEnable) => dispatch(actions.dx_home_browser_back(experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID, isTagEnable)),
   dx_home_back: bookmarks => dispatch(actions.dx_home_back(bookmarks)),
 
   updateInput: val => dispatch(searchActions.updateInput(val)),
@@ -289,6 +349,9 @@ const dispatchToProps = dispatch => ({
   openModal: type => dispatch(modalActions.openModal(type)),
 
   dx_my_channel_back: () => dispatch(homeActions.dx_my_channel_back()),
+
+
+  dx_training_complete: (experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID, isTagEnable) => dispatch(actions.dx_training_complete(experienceStreamGUID, experienceStreamWithChannelInfo, currentLevelExperiencePageGUID, isTagEnable)),
 });
 
 export default compose(connect(stateToProps, dispatchToProps), withNavigation)(HeaderNavigator);

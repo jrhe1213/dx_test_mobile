@@ -439,6 +439,7 @@ export default (state = initialState, action) => {
 
     case feedConstants.DX_HOME_BROWSER_BACK:
     case feedConstants.DX_BROWSER_BACK:
+    case feedConstants.DX_TRAINING_COMPLETE:
     case feedConstants.DX_FEED_BACK_COMPLETE:
     case deviceInfoConstants.CLOSE_CARD_ONLY_MODAL_REQUEST:
     case deviceInfoConstants.DX_VIDEO_SCREEN_CARD_ONLY_CLOSE_SUCCESS:

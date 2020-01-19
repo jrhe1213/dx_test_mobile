@@ -1393,11 +1393,12 @@ function* postStreamExperienceCardInfoV2Saga(action) {
               NumberOfImpressions: getExistedDownloaded.Response[0].numberOfImpressions || "0",
               CompletionArr: getExistedDownloaded.Response[0].CompletionArr,
               AudioCompletionArr: getExistedDownloaded.Response[0].AudioCompletionArr,
+              IsTrainingCompleted: getExistedDownloaded.Response[0].IsTrainingCompleted,
             }
           }
           const userSync = yield call(userSyncApi, formattedUserSyncParams, keycloak);
           if (userSync.Data.Confirmation !== 'SUCCESS') {
-            helpers.crashlyticsRecord(deviceInfo.crashlytics, 'Api', 'postStreamExperienceCardInfoSaga', 'Api', '/user/sync_stream_v4', userSync.Data.Message);
+            helpers.crashlyticsRecord(deviceInfo.crashlytics, 'Api', 'postStreamExperienceCardInfoSaga', 'Api', '/user/v2/sync_stream', userSync.Data.Message);
           }
         }
       } else {
