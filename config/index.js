@@ -1,19 +1,19 @@
-const keycloakRealm = 'org5024663852';
-// const keycloakRealm = 'org3814548266';
+// const keycloakRealm = 'org5024663852';
+const keycloakRealm = 'org3814548266';
 
-// const adminBaseLink = 'https://dev.api.publishxi.ca';
-const adminBaseLink = 'http://localhost:3000';
+const adminBaseLink = 'https://dev.api.publishxi.ca';
+// const adminBaseLink = 'http://localhost:3000';
 
-// const baseLink = `https://${keycloakRealm}.dev.api.publishxi.ca`;
-const baseLink = 'http://localhost:3000';
+const baseLink = `https://${keycloakRealm}.dev.api.publishxi.ca`;
+// const baseLink = 'http://localhost:3000';
 
 const h5p = 'https://dev-h5p.publishxi.ca';
 
-// const keycloakUrl = 'demo';
-const keycloakUrl = 'testorg';
+const keycloakUrl = 'demo';
+// const keycloakUrl = 'testorg';
 
-const keycloakAuthUrl = 'http://localhost:8080/auth';
-// const keycloakAuthUrl = 'https://dev-keycloak.publishxi.ca/auth';
+// const keycloakAuthUrl = 'http://localhost:8080/auth';
+const keycloakAuthUrl = 'https://dev-keycloak.publishxi.ca/auth';
 
 export const formatImageLink = imgGUID => `${baseLink}/picture?ImageGUID=${imgGUID}&OrgUrl=${keycloakUrl}`;
 
