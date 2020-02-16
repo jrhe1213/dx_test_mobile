@@ -149,11 +149,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.orgmobilern"
+        applicationId "com.publishxi.cpwr"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 31
-        versionName "1.3.9"
+        versionCode 10
+        versionName "1.0.9"
         multiDexEnabled true
         manifestPlaceholders = [
             appAuthRedirectScheme: 'redirect'

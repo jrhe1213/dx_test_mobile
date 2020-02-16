@@ -1,4 +1,4 @@
-package com.orgmobilern;
+package com.publishxi.cpwr;
 
 import android.app.Application;
 import android.content.Context;

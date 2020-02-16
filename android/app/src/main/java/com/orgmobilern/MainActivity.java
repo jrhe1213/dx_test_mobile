@@ -1,4 +1,4 @@
-package com.orgmobilern;
+package com.publishxi.cpwr;
 
 import com.facebook.react.ReactActivity;
 
