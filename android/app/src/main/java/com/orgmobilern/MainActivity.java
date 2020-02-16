@@ -1,4 +1,4 @@
-package com.orgmobilern;
+package com.healthcareforpets;
 
 import com.facebook.react.ReactActivity;
 
