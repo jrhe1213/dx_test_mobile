@@ -1,4 +1,4 @@
-package com.orgmobilern;
+package com.publishxi.unikron;
 
 import com.facebook.react.ReactActivity;
 

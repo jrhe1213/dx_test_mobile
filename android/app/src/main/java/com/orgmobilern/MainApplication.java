@@ -1,4 +1,4 @@
-package com.orgmobilern;
+package com.publishxi.unikron;
 
 import android.app.Application;
 import android.content.Context;

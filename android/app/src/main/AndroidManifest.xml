@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.orgmobilern">
+  package="com.publishxi.unikron">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -24,7 +24,7 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https"
-                    android:host="org3814548266.dev.api.publishxi.ca"
+                    android:host="org7258512972.api.publishxi.com"
                     android:pathPrefix="" />
         </intent-filter>
       </activity>
