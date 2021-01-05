@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-community/netinfo": "^2.0.2",
     "@shoutem/ui": "^0.23.20",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
